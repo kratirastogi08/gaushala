@@ -83,6 +83,8 @@ const MESSAGES = {
   UPDATED_SUCCESS: "Updated successfully",
   OTP_INCORRECT: "Otp incorrect",
   PHONE_NO_EXISTS: "Phone number already exists",
+  BAD_REQUEST: "Bad request",
+  INTERNAL_SERVER_ERROR:"Internal Server Error",
 };
 const success = (req, res, code, message, result = {}) => {
   try {

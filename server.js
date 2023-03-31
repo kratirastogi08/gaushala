@@ -7,10 +7,11 @@ const path = require("path")
 require('dotenv').config()
 const config=require("./app/config/index")
 const { connections } = require('./app/config/database')
+//const swagger = require("./swaggerDocs");
 
 app.set('views', path.join(__dirname, '/app/templates'))
 app.set('view engine', 'ejs')
-
+//app.use(swagger)
 app.use(express.static(__dirname))
 app.use(cors())
 app.use((req, res, next) => {

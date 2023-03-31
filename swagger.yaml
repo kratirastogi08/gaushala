@@ -1,0 +1,794 @@
+openapi: 3.0.0
+info:
+ title: Gaushala
+ contact: {}
+ version: '1.0'
+servers:
+- url: http://localhost:5000/api/v1
+  variables: {}
+paths:
+ /login:
+   post:
+    tags:
+    - DRIVER
+    summary: login
+    parameters:
+    - name: x-api-key
+      in: header
+      description: ''
+      required: true
+      style: simple
+      schema:
+        type: string
+        example: asdfghjklqwertyuiopzxcvbnm
+    - name: Accept-Language
+      in: header
+      description: ''
+      required: true
+      style: simple
+      schema:
+       type: string
+       example: en
+    requestBody:
+      desciption: ''
+      content:
+        application/json:
+          schema:
+          allOf:
+          - $ref: '#/components/schemas/loginrequest'
+          - example:
+              licenseNo: UP0620210034761
+              password: Driver@123
+          example:
+            licenceNo: UP0620210034761
+            password: Driver@123
+      required: true
+    responses:
+     '401':
+       description: Unauthorized
+       headers: {} 
+       content:
+        application/json:
+         schema:
+         allOf:
+         - $ref: '#/components/schemas/401InvalidCredentials1'
+         - example:
+            success: false
+            status_code: 401
+            message: Licence number is invalid
+            result:
+             error: error
+         example:
+                success: false
+                status_code: 401
+                message: Licence number is invalid
+                result:
+                  error: error
+     '400':
+          description: Bad Request
+          headers: {}
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/400BadRequest1'
+                - example:
+                    success: false
+                    status_code: 400
+                    message: '"password" is required'
+                    result:
+                      error: error
+                    time: 1667994134882
+              example:
+                success: false
+                status_code: 400
+                message: '"password" is required'
+                result:
+                  error: error
+                time: 1667994134882
+      '202':
+          description: Accepted
+          headers: {}
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/202Accepted'
+                - example:
+                    success: true
+                    statusCode: 202
+                    message: Accepted
+                    result:
+                      name: john
+                      email: johndoe@gmail.com
+                      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNjdhNjhjYzY1N2YxYmUxZjU0ZWUwOSIsImVtYWlsIjoiam9obmRvZUBnbWFpbC5jb20iLCJpYXQiOjE2Njc5OTQyODYsImV4cCI6MTY2ODg1ODI4Nn0.G-xUAQbl2O-QGcC7Pp8ig7HuS3QpHOQU92B8s5aocBU
+                    time: 1667994286266
+              example:
+                success: true
+                statusCode: 202
+                message: Accepted
+                result:
+                  name: john
+                  email: johndoe@gmail.com
+                  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNjdhNjhjYzY1N2YxYmUxZjU0ZWUwOSIsImVtYWlsIjoiam9obmRvZUBnbWFpbC5jb20iLCJpYXQiOjE2Njc5OTQyODYsImV4cCI6MTY2ODg1ODI4Nn0.G-xUAQbl2O-QGcC7Pp8ig7HuS3QpHOQU92B8s5aocBU
+                time: 1667994286266
+      deprecated: false
+    /forgotPassword:
+    post:
+      tags:
+      - DRIVER
+      summary: forgot password
+      operationId: forgotpassword
+      parameters:
+      - name: x-api-key
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: asdfghjklqwertyuiopzxcvbnm
+      - name: Accept-Language
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: en
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/forgotpasswordrequest'
+              - example:
+                  email: johndoe@gmail.com
+            example:
+              email: johndoe@gmail.com
+        required: true
+      responses:
+        '403':
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/403Forbidden1'
+                - example:
+                    success: false
+                    status_code: 403
+                    message: Driver not found by this email
+                    result:
+                      error: error
+                    time: 1667994477776
+              example:
+                success: false
+                status_code: 403
+                message: Driver not found by this email
+                result:
+                  error: error
+                time: 1667994477776
+        '400':
+          description: Bad Request
+          headers: {}
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/400BadRequest1'
+                - example:
+                    success: false
+                    status_code: 400
+                    message: '"email" is required'
+                    result:
+                      error: error
+                    time: 1667994532185
+              example:
+                success: false
+                status_code: 400
+                message: '"email" is required'
+                result:
+                  error: error
+                time: 1667994532185
+        '500':
+          description: Internal Server Error
+          headers: {}
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/500InternalServerError1'
+                - example:
+                    success: false
+                    status_code: 500
+                    message: Something went wrong
+                    result: ''
+                    time: 1667994619886
+              example:
+                success: false
+                status_code: 500
+                message: Something went wrong
+                result: ''
+                time: 1667994619886
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/200Ok'
+                - example:
+                    success: true
+                    statusCode: 200
+                    message: Link sent on your email
+                    result: ''
+                    time: 1667995826322
+              example:
+                success: true
+                statusCode: 200
+                message: Link sent on your email
+                result: ''
+                time: 1667995826322
+      deprecated: false
+   /resetPassword:
+    patch:
+      tags:
+      - DRIVER
+      summary: reset password
+      operationId: resetpassword
+      parameters:
+      - name: x-api-key
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: asdfghjklqwertyuiopzxcvbnm
+      - name: Accept-Language
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: en
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/resetpasswordrequest'
+              - example:
+                  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNjdhNjhjYzY1N2YxYmUxZjU0ZWUwOSIsImlhdCI6MTY2ODAxMzU2OCwiZXhwIjoxNjY4MDIwNzY4fQ.ixXt6KSH9uTbcmIp0zEI1SgGnaVJJGYiRrpzq65ssME
+                  newPassword: Driver@123
+            example:
+              token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNjdhNjhjYzY1N2YxYmUxZjU0ZWUwOSIsImlhdCI6MTY2ODAxMzU2OCwiZXhwIjoxNjY4MDIwNzY4fQ.ixXt6KSH9uTbcmIp0zEI1SgGnaVJJGYiRrpzq65ssME
+              newPassword: Driver@123
+        required: true
+      responses:
+        '401':
+          description: Unauthorized
+          headers: {}
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/401Unauthorized1'
+                - example:
+                    success: false
+                    status_code: 401
+                    message: JWT_EXPIRED
+                    result:
+                      error: error
+                    time: 1667996052468
+              example:
+                success: false
+                status_code: 401
+                message: JWT_EXPIRED
+                result:
+                  error: error
+                time: 1667996052468
+        '400':
+          description: Bad Request
+          headers: {}
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/400BadRequest1'
+                - example:
+                    success: false
+                    status_code: 400
+                    message: '"newPassword" is required'
+                    result:
+                      error: error
+                    time: 1667996130249
+              example:
+                success: false
+                status_code: 400
+                message: '"newPassword" is required'
+                result:
+                  error: error
+                time: 1667996130249
+        '202':
+          description: Accepted
+          headers: {}
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/202PasswordChanged'
+                - example:
+                    success: true
+                    statusCode: 202
+                    message: Password changed successfully!
+                    result: ''
+                    time: 1668001099660
+              example:
+                success: true
+                statusCode: 202
+                message: Password changed successfully!
+                result: ''
+                time: 1668001099660
+      deprecated: false
+   /logout:
+    post:
+      tags:
+      - DRIVER
+      summary: logout
+      operationId: logout
+      parameters:
+      - name: x-api-key
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: asdfghjklqwertyuiopzxcvbnm
+      - name: Accept-Language
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: en
+      responses:
+        '401':
+          description: Unauthorized
+          headers: {}
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/401Unauthorized1'
+                - example:
+                    success: false
+                    status_code: 401
+                    message: JWT_EXPIRED
+                    result:
+                      error: error
+                    time: 1667996052468
+              example:
+                success: false
+                status_code: 401
+                message: JWT_EXPIRED
+                result:
+                  error: error
+                time: 1667996052468
+        '400':
+          description: Bad Request
+          headers: {}
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/400MissingToken1'
+                - example:
+                    success: false
+                    status_code: 401
+                    message: "'Missing token'"
+                    result:
+                      error: error
+                    time: 1668013467237
+              example:
+                success: false
+                status_code: 401
+                message: "'Missing token'"
+                result:
+                  error: error
+                time: 1668013467237
+        '204':
+          description: No Content
+          headers: {}
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/204Success'
+                - example:
+                    success: true
+                    statusCode: 200
+                    message: Driver logged out successfully
+                    result: ''
+                    time: 1668014005300
+              example:
+                success: true
+                statusCode: 200
+                message: Driver logged out successfully
+                result: ''
+                time: 1668014005300
+      deprecated: false
+   /addDriver:
+    post:
+      tags:
+      - DRIVER
+      summary: add driver
+      operationId: adddriver
+      parameters:
+      - name: x-api-key
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: asdfghjklqwertyuiopzxcvbnm
+      - name: Accept-Language
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: en
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            encoding: {}
+            schema:
+              required:
+              - name
+              - driverAddress
+              - mobileNo
+              - licenceNo
+              - email
+              - aadharNo
+              - serviceId
+              - status
+              - dateOfBirth
+              - licenceValidUpto
+              - thana
+              - aadharImage
+              - licenceImage
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: sam
+                driverAddress:
+                  type: string
+                  example: D-19 mundka delhi 110041
+                mobileNo:
+                  type: integer
+                  format: int64
+                  example: 7890212379
+                licenceNo:
+                  type: integer
+                  format: int64
+                  example: 53722757620
+                email:
+                  type: string
+                  example: johndoe1225@gmail.com
+                aadharNo:
+                  type: integer
+                  format: int64
+                  example: 123456789121
+                serviceId:
+                  type: integer
+                  format: int32
+                  example: 123456790
+                status:
+                  type: string
+                  example: unblock
+                dateOfBirth:
+                  type: string
+                  example: 09-03-1982
+                licenceValidUpto:
+                  type: string
+                  example: 02-11-2024
+                thana:
+                  type: string
+                  example: sitapur
+                aadharImage:
+                  type: string
+                licenceImage:
+                  type: string
+        required: false
+      responses:
+        default:
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/400MissingToken1'
+                - example:
+                    success: false
+                    status_code: 400
+                    message: Missing token
+                    result:
+                      error: error
+                    time: 1667996130249
+              example:
+                success: false
+                status_code: 400
+                message: Missing token
+                result:
+                  error: error
+                time: 1667996130249
+        '401':
+          description: Unauthorized
+          headers: {}
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/401TokenInvalid1'
+                - example:
+                    success: false
+                    status_code: 401
+                    message: JWT_EXPIRED
+                    result:
+                      error: error
+                    time: 1667996052468
+              example:
+                success: false
+                status_code: 401
+                message: JWT_EXPIRED
+                result:
+                  error: error
+                time: 1667996052468
+      deprecated: false
+   /editDriver:
+    put:
+      tags:
+      - DRIVER
+      summary: edit driver
+      operationId: editdriver
+      parameters:
+      - name: driverId
+        in: query
+        description: ''
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: 6368f82636b2d4ffa57456ac
+      - name: x-api-key
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: asdfghjklqwertyuiopzxcvbnm
+      - name: Accept-Language
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: en
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            encoding: {}
+            schema:
+              required:
+              - name
+              - driverAddress
+              - mobileNo
+              - licenceNo
+              - email
+              - aadharNo
+              - serviceId
+              - status
+              - dateOfBirth
+              - licenceValidUpto
+              - thana
+              - aadharImage
+              - licenceImage
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: sam2
+                driverAddress:
+                  type: string
+                  example: D-19 mundka delhi 110041
+                mobileNo:
+                  type: integer
+                  format: int64
+                  example: 7890212374
+                licenceNo:
+                  type: string
+                  example: '06202100347789'
+                email:
+                  type: string
+                  example: johndoe123@gmail.com
+                aadharNo:
+                  type: integer
+                  format: int64
+                  example: 123456787892
+                serviceId:
+                  type: integer
+                  format: int32
+                  example: 12345987
+                status:
+                  type: string
+                  example: unblock
+                dateOfBirth:
+                  type: string
+                  example: 09-03-1982
+                licenceValidUpto:
+                  type: string
+                  example: 02-11-2024
+                thana:
+                  type: string
+                  example: sitapur
+                aadharImage:
+                  type: string
+                licenceImage:
+                  type: string
+        required: false
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+   /profile:
+    get:
+      tags:
+      - DRIVER
+      summary: get profile
+      operationId: getprofile
+      parameters:
+      - name: x-api-key
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: asdfghjklqwertyuiopzxcvbnm
+      - name: Accept-Language
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: en
+      responses:
+        default:
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/400MissingToken1'
+                - example:
+                    success: false
+                    status_code: 400
+                    message: Missing token
+                    result:
+                      error: error
+                    time: 1667996130249
+              example:
+                success: false
+                status_code: 400
+                message: Missing token
+                result:
+                  error: error
+                time: 1667996130249
+        '400':
+          description: Bad Request
+          headers: {}
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/400MissingParameter1'
+                - example:
+                    success: false
+                    status_code: 400
+                    message: '"newPassword" is required'
+                    result:
+                      error: error
+                    time: 1667996130249
+              example:
+                success: false
+                status_code: 400
+                message: '"newPassword" is required'
+                result:
+                  error: error
+                time: 1667996130249
+        '401':
+          description: Unauthorized
+          headers: {}
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/401TokenInvalid1'
+                - example:
+                    success: false
+                    status_code: 401
+                    message: JWT_EXPIRED
+                    result:
+                      error: error
+                    time: 1667996052468
+              example:
+                success: false
+                status_code: 401
+                message: JWT_EXPIRED
+                result:
+                  error: error
+                time: 1667996052468
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/200Success'
+                - example:
+                    success: true
+                    statusCode: 200
+                    message: Driver profile fetch successfully
+                    result:
+                      name: john
+                      profilePic: app/public/images/2022-11-09T17:31:47.691Z-aadhar.png
+                      email: johndoe@gmail.com
+                      mobileNo: 7890212370
+                      dateOfBirth: 09-03-1982
+                      serviceId: '12345679'
+                      thana: sitapur
+                      driverAddress: D-19 mundka delhi 110041
+                      id: 6367a68cc657f1be1f54ee09
+                      licenceNo: UP0620210034761
+                    time: 1668062823105
+              example:
+                success: true
+                statusCode: 200
+                message: Driver profile fetch successfully
+                result:
+                  name: john
+                  profilePic: app/public/images/2022-11-09T17:31:47.691Z-aadhar.png
+                  email: johndoe@gmail.com
+                  mobileNo: 7890212370
+                  dateOfBirth: 09-03-1982
+                  serviceId: '12345679'
+                  thana: sitapur
+                  driverAddress: D-19 mundka delhi 110041
+                  id: 6367a68cc657f1be1f54ee09
+                  licenceNo: UP0620210034761
+                time: 1668062823105
+      deprecated: false
+        
+
+
+    
